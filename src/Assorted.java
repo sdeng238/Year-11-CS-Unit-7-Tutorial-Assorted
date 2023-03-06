@@ -1,3 +1,5 @@
+import org.junit.jupiter.params.shadow.com.univocity.parsers.common.input.DefaultCharInputReader;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -342,36 +344,23 @@ public class Assorted {
      *              ["WEST", "WEST"]
      */
     public static List<String> wildWest(List<String> directions) {
-        int frequency;
+        for (int i = 0; i < directions.size() - 1; i++)
+        {
+            if(directions.get(i).equals("NORTH") && directions.get(i + 1).equals("SOUTH") ||
+            directions.get(i).equals("SOUTH") && directions.get(i + 1).equals("NORTH") ||
+            directions.get(i).equals("EAST") && directions.get(i + 1).equals("WEST") ||
+            directions.get(i).equals("WEST") && directions.get(i + 1).equals("EAST"))
+            {
+                directions.remove(i);
+                directions.remove(i);
+                i--;
+                i--;
 
-        if(Collections.frequency(directions, "NORTH") > Collections.frequency(directions, "SOUTH"))
-        {
-            frequency = Collections.frequency(directions, "SOUTH");
-        }
-        else
-        {
-            frequency = Collections.frequency(directions, "NORTH");
-        }
-
-        for(int num = 0; num < frequency; num++)
-        {
-            directions.remove("NORTH");
-            directions.remove("SOUTH");
-        }
-
-        if(Collections.frequency(directions, "EAST") > Collections.frequency(directions, "WEST"))
-        {
-            frequency = Collections.frequency(directions, "WEST");
-        }
-        else
-        {
-            frequency = Collections.frequency(directions, "EAST");
-        }
-
-        for(int num = 0; num < frequency; num++)
-        {
-            directions.remove("EAST");
-            directions.remove("WEST");
+                while(i < -1)
+                {
+                    i++;
+                }
+            }
         }
 
         return directions;
